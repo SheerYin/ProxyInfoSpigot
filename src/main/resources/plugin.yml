@@ -1,0 +1,17 @@
+main: io.github.yin.proxyinfospigot.ProxyInfoSpigotMain
+name: ProxyInfoSpigot
+version: '{pluginVersion}'
+description: ''
+api-version: '1.16'
+author: [ 尹 ]
+prefix: '服务器名'
+libraries:
+  - org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+
+commands:
+  proxyinfospigot:
+    aliases: [ pis ]
+    permission: 'proxyinfospigot.command'
+permissions:
+  proxyinfospigot.command:
+    default: op
