@@ -26,13 +26,16 @@ class ProxyInfoSpigotMain : JavaPlugin(), TabExecutor, PluginMessageListener {
         instance = this
         server.consoleSender.sendMessage(prefix + "插件开始加载 " + description.version)
 
-        getCommand("proxyinfospigot")?.setExecutor(this)
         server.messenger.registerOutgoingPluginChannel(this, pluginChannel)
         server.messenger.registerIncomingPluginChannel(this, pluginChannel, this)
+        getCommand("proxyinfospigot")?.setExecutor(this)
     }
 
     override fun onDisable() {
         server.consoleSender.sendMessage(prefix + "插件开始卸载 " + description.version)
+
+        server.messenger.unregisterOutgoingPluginChannel(this, pluginChannel)
+        server.messenger.unregisterIncomingPluginChannel(this, pluginChannel, this)
     }
 
     override fun onCommand(
