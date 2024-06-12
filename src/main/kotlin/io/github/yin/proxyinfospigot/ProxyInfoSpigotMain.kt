@@ -43,7 +43,6 @@ class ProxyInfoSpigotMain : JavaPlugin(), TabExecutor, PluginMessageListener {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, arguments: Array<out String>): Boolean {
         when (arguments.size) {
-            0 -> {}
             1 -> {
                 when {
                     suggestion(sender, "servername", arguments[0]) -> {
@@ -63,7 +62,6 @@ class ProxyInfoSpigotMain : JavaPlugin(), TabExecutor, PluginMessageListener {
             1 -> {
                 listMatches(arguments[0], listOf("servername", "players"))
             }
-
             else -> {
                 emptyList()
             }
@@ -103,7 +101,7 @@ class ProxyInfoSpigotMain : JavaPlugin(), TabExecutor, PluginMessageListener {
                         serverName = input.readUTF()
                     }
                     "players" -> {
-                        players = input.readUTF().split(", ")
+                        players = input.readUTF().split(",")
                     }
                 }
             }
