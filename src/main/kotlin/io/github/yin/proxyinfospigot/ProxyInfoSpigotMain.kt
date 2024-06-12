@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.plugin.messaging.PluginMessageListener
 import java.io.ByteArrayInputStream
 import java.io.DataInputStream
+import java.util.*
 
 
 class ProxyInfoSpigotMain : JavaPlugin(), TabExecutor, PluginMessageListener {
@@ -40,20 +41,15 @@ class ProxyInfoSpigotMain : JavaPlugin(), TabExecutor, PluginMessageListener {
         server.consoleSender.sendMessage(prefix + "插件开始卸载 " + description.version)
     }
 
-    override fun onCommand(
-        sender: CommandSender,
-        command: Command,
-        label: String,
-        arguments: Array<out String>
-    ): Boolean {
+    override fun onCommand(sender: CommandSender, command: Command, label: String, arguments: Array<out String>): Boolean {
         when (arguments.size) {
             0 -> {}
             1 -> {
                 when {
-                    suggestion(arguments[0], "servername", sender) -> {
+                    suggestion(sender, "servername", arguments[0]) -> {
                         sender.sendMessage(prefix + "在代理的服务器名是 " + serverName)
                     }
-                    suggestion(arguments[0], "players", sender) -> {
+                    suggestion(sender, "players", arguments[0]) -> {
                         sender.sendMessage(prefix + "代理玩家列表 " + players)
                     }
                 }
@@ -62,12 +58,7 @@ class ProxyInfoSpigotMain : JavaPlugin(), TabExecutor, PluginMessageListener {
         return true
     }
 
-    override fun onTabComplete(
-        sender: CommandSender,
-        command: Command,
-        label: String,
-        arguments: Array<out String>
-    ): List<String> {
+    override fun onTabComplete(sender: CommandSender, command: Command, label: String, arguments: Array<out String>): List<String> {
         return when (arguments.size) {
             1 -> {
                 listMatches(arguments[0], listOf("servername", "players"))
@@ -91,10 +82,12 @@ class ProxyInfoSpigotMain : JavaPlugin(), TabExecutor, PluginMessageListener {
         return false
     }
 
-    private fun suggestion(argument: String, suggest: String, sender: CommandSender): Boolean {
-        if (argument.equals(suggest, ignoreCase = true)) {
+    private val pluginName = instance.description.name.lowercase()
+    private fun suggestion(sender: CommandSender, argument: String, vararg suggest: String): Boolean {
+        val lowerCaseArgument = argument.lowercase(Locale.getDefault())
+        if (lowerCaseArgument in suggest) {
             return permissionMessage(
-                sender,"${description.name.lowercase()}.command.$suggest"
+                sender, "$pluginName.command.$lowerCaseArgument"
             )
         }
         return false
