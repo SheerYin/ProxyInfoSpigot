@@ -17,28 +17,40 @@ class ProxyInfoSpigotMain : JavaPlugin(), TabExecutor, PluginMessageListener {
 
     companion object {
         lateinit var instance: ProxyInfoSpigotMain
-        const val prefix = "§f[§3代理信息§f] "
+
+        lateinit var pluginName: String
+        lateinit var lowercaseName: String
+        lateinit var pluginVersion: String
+        lateinit var pluginAuthor: List<String>
+        lateinit var pluginPrefix: String
+        
         const val pluginChannel = "proxyinfo:channel"
+
         var serverName = ""
         var players = listOf<String>()
     }
 
     override fun onEnable() {
         instance = this
+        pluginName = description.name
+        lowercaseName = pluginName.lowercase()
+        pluginVersion = description.version
+        pluginAuthor = description.authors
+        pluginPrefix = "§f[§3${description.prefix}§f] "
+
+        server.consoleSender.sendMessage(pluginPrefix + "插件开始加载 " + pluginVersion)
 
         server.messenger.registerOutgoingPluginChannel(this, pluginChannel)
         server.messenger.registerIncomingPluginChannel(this, pluginChannel, this)
 
         getCommand("proxyinfospigot")?.setExecutor(this)
-
-        server.consoleSender.sendMessage(prefix + "插件开始加载 " + description.version)
     }
 
     override fun onDisable() {
+        server.consoleSender.sendMessage(pluginPrefix + "插件开始卸载 " + pluginVersion)
+
         server.messenger.unregisterOutgoingPluginChannel(this, pluginChannel)
         server.messenger.unregisterIncomingPluginChannel(this, pluginChannel, this)
-
-        server.consoleSender.sendMessage(prefix + "插件开始卸载 " + description.version)
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, arguments: Array<out String>): Boolean {
@@ -46,10 +58,10 @@ class ProxyInfoSpigotMain : JavaPlugin(), TabExecutor, PluginMessageListener {
             1 -> {
                 when {
                     suggestion(sender, "servername", arguments[0]) -> {
-                        sender.sendMessage(prefix + "在代理的服务器名是 " + serverName)
+                        sender.sendMessage(pluginPrefix + "在代理的服务器名是 " + serverName)
                     }
                     suggestion(sender, "players", arguments[0]) -> {
-                        sender.sendMessage(prefix + "代理玩家列表 " + players)
+                        sender.sendMessage(pluginPrefix + "代理玩家列表 " + players)
                     }
                 }
             }
@@ -76,16 +88,15 @@ class ProxyInfoSpigotMain : JavaPlugin(), TabExecutor, PluginMessageListener {
         if (sender.hasPermission(permission)) {
             return true
         }
-        sender.sendMessage("${prefix}您没有 $permission 权限")
+        sender.sendMessage("${pluginPrefix}您没有 $permission 权限")
         return false
     }
 
-    private val pluginName = instance.description.name.lowercase()
     private fun suggestion(sender: CommandSender, argument: String, vararg suggest: String): Boolean {
         val lowerCaseArgument = argument.lowercase(Locale.getDefault())
         if (lowerCaseArgument in suggest) {
             return permissionMessage(
-                sender, "$pluginName.command.$lowerCaseArgument"
+                sender, "$lowercaseName.command.$lowerCaseArgument"
             )
         }
         return false
