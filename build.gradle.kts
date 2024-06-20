@@ -35,7 +35,7 @@ bukkitPluginYaml {
     main = "$group.${project.name}Main"
     authors.add("尹")
     prefix = "代理信息"
-    libraries = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.0.0", "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+    libraries = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
 
     val pre = "${lowercaseName}.command"
     commands {
