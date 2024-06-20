@@ -21,7 +21,7 @@ class ProxyInfoSpigotMain : JavaPlugin(), TabExecutor, PluginMessageListener {
         lateinit var pluginName: String
         lateinit var lowercaseName: String
         lateinit var pluginVersion: String
-        lateinit var pluginAuthor: List<String>
+        lateinit var pluginAuthors: List<String>
         lateinit var pluginPrefix: String
         
         const val pluginChannel = "proxyinfo:channel"
@@ -35,7 +35,7 @@ class ProxyInfoSpigotMain : JavaPlugin(), TabExecutor, PluginMessageListener {
         pluginName = description.name
         lowercaseName = pluginName.lowercase()
         pluginVersion = description.version
-        pluginAuthor = description.authors
+        pluginAuthors = description.authors
         pluginPrefix = "§f[§3${description.prefix}§f] "
 
         server.consoleSender.sendMessage(pluginPrefix + "插件开始加载 " + pluginVersion)
