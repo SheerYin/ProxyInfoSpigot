@@ -18,15 +18,16 @@ repositories {
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
 
-    maven("https://libraries.minecraft.net/")
-    maven("https://repo.codemc.io/repository/nms/")
+//    maven("https://libraries.minecraft.net/")
+//    maven("https://repo.codemc.io/repository/nms/")
 }
 
+val minecraftVersion = "1.21"
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.20.6-R0.1-SNAPSHOT")
-    compileOnly("org.spigotmc:spigot:1.20.6-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:${minecraftVersion}-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot:${minecraftVersion}-R0.1-SNAPSHOT")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
 }
 
 bukkitPluginYaml {
@@ -35,7 +36,7 @@ bukkitPluginYaml {
     main = "$group.${project.name}Main"
     authors.add("尹")
     prefix = "代理信息"
-    libraries = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.0.0", "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+    libraries = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
 
     val pre = "${lowercaseName}.command"
     commands {
