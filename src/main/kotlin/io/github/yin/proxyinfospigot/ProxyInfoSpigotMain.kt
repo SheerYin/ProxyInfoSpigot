@@ -12,7 +12,6 @@ import java.io.ByteArrayInputStream
 import java.io.DataInputStream
 import java.util.*
 
-
 class ProxyInfoSpigotMain : JavaPlugin(), TabExecutor, PluginMessageListener {
 
     companion object {
